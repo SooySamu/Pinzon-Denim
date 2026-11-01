@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo | Pinzón Denim</title>
+  <!-- Estilos Locales -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- FontAwesome Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Estilos específicos para la tienda y filtros */
+    .filter-btn {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid #e5e7eb;
+      background-color: #ffffff;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background-color: #000000;
+      color: #ffffff;
+      border-color: #000000;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 2rem;
+    }
+    @media (min-width: 640px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .product-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .product-card {
+      border: 1px solid #f3f4f6;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+    .product-img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+    }
+    .product-info {
+      padding: 1.25rem;
+    }
+    .product-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .product-tag {
+      font-size: 0.75rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .product-price {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. ENCABEZADO MINIMALISTA -->
+  <header>
+    <div class="header-container">
+      
+      <!-- LOGO -->
+      <a href="index.html" class="logo-brand">
+        <svg width="32" height="32" viewBox="0 0 100 100" fill="currentColor">
+          <path d="M50 10 L65 35 L80 35 L68 50 L75 80 L50 62 L25 80 L32 50 L20 35 L35 35 Z"/>
+        </svg>
+        <span>PINZÓN</span>
+      </a>
+
+      <!-- NAVEGACIÓN -->
+      <nav class="main-nav">
+        <a href="index.html">Inicio</a>
+        
+        <div class="nav-item-dropdown">
+          <a href="catalogo.html?categoria=todos" style="font-weight: 700;">Catálogo <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
+          <div class="dropdown-menu">
+            <div>
+              <h4>Público</h4>
+              <ul>
+                <li><a href="catalogo.html?categoria=hombre">Hombre</a></li>
+                <li><a href="catalogo.html?categoria=mujer">Mujer</a></li>
+                <li><a href="catalogo.html?categoria=nino">Niño</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Línea Denim</h4>
+              <ul>
+                <li><a href="catalogo.html?categoria=jeans">Jeans Holgados</a></li>
+                <li><a href="catalogo.html?categoria=faldas">Faldas</a></li>
+                <li><a href="catalogo.html?categoria=shorts">Shorts</a></li>
+                <li><a href="catalogo.html?categoria=enterizos">Enterizos</a></li>
+                <li><a href="catalogo.html?categoria=bermudas">Bermudas</a></li>
+                <li><a href="catalogo.html?categoria=tops">Tops</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <a href="nosotros.html">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <!-- ACCIONES -->
+      <div class="header-actions">
+        <div class="search-container">
+          <button id="searchBtn" class="icon-btn" title="Buscar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <input type="text" id="searchInput" class="search-input" placeholder="Buscar prendas...">
+        </div>
+
+        <button id="cartBtn" class="icon-btn" title="Carrito">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count">2</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 2. TÍTULO Y BOTONES DE FILTRO -->
+  <section class="categories-section" style="padding-bottom: 2rem;">
+    <h1 class="categories-title" id="catalogTitle" style="font-size: 2.5rem; text-align: center; margin-bottom: 2rem;">Colección Denim Pinzón</h1>
+    
+    <!-- Barra de Filtros interactivos -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-bottom: 3rem;">
+      <button class="filter-btn active" onclick="applyFilter('todos', this)">Ver Todo</button>
+      <button class="filter-btn" onclick="applyFilter('new', this)">NEW</button>
+      <button class="filter-btn" onclick="applyFilter('hombre', this)">Hombre</button>
+      <button class="filter-btn" onclick="applyFilter('mujer', this)">Mujer</button>
+      <button class="filter-btn" onclick="applyFilter('nino', this)">Niño</button>
+      <button class="filter-btn" onclick="applyFilter('jeans', this)">Jeans</button>
+      <button class="filter-btn" onclick="applyFilter('faldas', this)">Faldas</button>
+      <button class="filter-btn" onclick="applyFilter('shorts', this)">Shorts</button>
+      <button class="filter-btn" onclick="applyFilter('enterizos', this)">Enterizos</button>
+      <button class="filter-btn" onclick="applyFilter('bermudas', this)">Bermudas</button>
+      <button class="filter-btn" onclick="applyFilter('tops', this)">Tops</button>
+    </div>
+
+    <!-- 3. CUADRÍCULA DE PRODUCTOS -->
+    <div class="product-grid" id="productGrid">
+      
+      <!-- Producto 1 -->
+      <div class="product-card" data-category="jeans mujer new">
+        <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=600" class="product-img" alt="Jean Holgado">
+        <div class="product-info">
+          <span class="product-tag">Jeans • Autor / Mujer</span>
+          <h3 class="product-title">Jean Holgado Intervenido</h3>
+          <span class="product-price">$180.000 COP</span>
+          <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20estoy%20interesado%20en%20el%20Jean%20Holgado%20Intervenido" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Producto 2 -->
+      <div class="product-card" data-category="faldas mujer new">
+        <img src="https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=600" class="product-img" alt="Falda Denim">
+        <div class="product-info">
+          <span class="product-tag">Faldas • Mujer</span>
+          <h3 class="product-title">Falda Denim de Autor</h3>
+          <span class="product-price">$140.000 COP</span>
+          <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20estoy%20interesado%20en%20la%20Falda%20Denim%20de%20Autor" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Producto 3 -->
+      <div class="product-card" data-category="shorts mujer">
+        <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=600" class="product-img" alt="Short Denim">
+        <div class="product-info">
+          <span class="product-tag">Shorts • Mujer</span>
+          <h3 class="product-title">Short Denim Desgastado</h3>
+          <span class="product-price">$110.000 COP</span>
+          <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20estoy%20interesado%20en%20el%20Short%20Denim%20Desgastado" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Producto 4 -->
+      <div class="product-card" data-category="enterizos mujer new">
+        <img src="https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=600" class="product-img" alt="Enterizo Denim">
+        <div class="product-info">
+          <span class="product-tag">Enterizos • Mujer</span>
+          <h3 class="product-title">Enterizo Denim Urbano</h3>
+          <span class="product-price">$220.000 COP</span>
+          <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20estoy%20interesado%20en%20el%20Enterizo%20Denim%20Urbano" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Producto 5 -->
+      <div class="product-card" data-category="bermudas hombre mujer">
+        <img src="https://images.unsplash.com/photo-1565084888279-aca607ecce0c?q=80&w=600" class="product-img" alt="Bermuda Denim">
+        <div class="product-info">
+          <span class="product-tag">Bermudas • Unisex</span>
+          <h3 class="product-title">Bermuda Holgada Streetwear</h3>
+          <span class="product-price">$130.000 COP</span>
+          <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20estoy%20interesado%20en%20la%20Bermuda%20Holgada%20Streetwear" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Producto 6 -->
+      <div class="product-card" data-category="tops mujer">
+        <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=600" class="product-img" alt="Crop Top Denim">
+        <div class="product-info">
+          <span class="product-tag">Tops • Mujer</span>
+          <h3 class="product-title">Crop Top Denim Estructurado</h3>
+          <span class="product-price">$95.000 COP</span>
+          <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20estoy%20interesado%20en%20el%20Crop%20Top%20Denim" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Producto 7 -->
+      <div class="product-card" data-category="jeans hombre new">
+        <img src="https://images.unsplash.com/photo-1582552938357-32b906df40cb?q=80&w=600" class="product-img" alt="Jean Hombre">
+        <div class="product-info">
+          <span class="product-tag">Jeans • Hombre</span>
+          <h3 class="product-title">Jean Masculino Wide Leg</h3>
+          <span class="product-price">$185.000 COP</span>
+          <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20estoy%20interesado%20en%20el%20Jean%20Masculino%20Wide%20Leg" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Producto 8 -->
+      <div class="product-card" data-category="nino">
+        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600" class="product-img" alt="Chaqueta Niño">
+        <div class="product-info">
+          <span class="product-tag">Línea Infantil • Niño</span>
+          <h3 class="product-title">Chaqueta Denim Infantil</h3>
+          <span class="product-price">$120.000 COP</span>
+          <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20estoy%20interesado%20en%20la%20Chaqueta%20Denim%20Infantil" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. CARRITO LATERAL (SLIDE-OVER) -->
+  <div id="cartModal" class="cart-modal">
+    <div id="cartBackdrop" class="cart-backdrop"></div>
+    <div id="cartPanel" class="cart-panel">
+      <div>
+        <div class="cart-header">
+          <h3 class="font-serif-custom" style="font-size: 1.25rem; font-weight: 700;">Tu Carrito</h3>
+          <button id="closeCart" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div style="padding: 1rem 0;">
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=150" style="width: 64px; height: 64px; object-fit: cover; border-radius: 4px;">
+            <div>
+              <h4 style="font-weight: 700; font-size: 0.875rem;">Jean Holgado de Autor</h4>
+              <p style="font-size: 0.75rem; color: #6b7280;">Talla M</p>
+              <span style="font-size: 0.875rem; font-weight: 600;">$180.000 COP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="border-top: 1px solid #e5e7eb; padding-top: 1rem;">
+        <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 1rem;">
+          <span>Total:</span>
+          <span>$180.000 COP</span>
+        </div>
+        <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20quisiera%20finalizar%20mi%20compra" target="_blank" class="btn-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. PIE DE PÁGINA (FOOTER) -->
+  <footer id="contacto">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Recursos Pinzón</h4>
+        <ul>
+          <li><a href="#">Buscar Tienda / Showroom</a></li>
+          <li><a href="#">Catálogo Mayorista (B2B)</a></li>
+          <li><a href="#">Guía de Tallas</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Obtener Ayuda</a></li>
+          <li><a href="#">Estado de Pedido</a></li>
+          <li><a href="#">Envío y Entrega</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Opciones de Pago</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Acerca de Pinzón</h4>
+        <ul>
+          <li><a href="nosotros.html">Historia de la Marca</a></li>
+          <li><a href="nosotros.html">Taller de Bosa & Confección Ética</a></li>
+          <li><a href="nosotros.html">Impacto Social</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Síguenos</h4>
+        <div class="social-icons">
+          <a href="https://instagram.com/tu_usuario" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://facebook.com/tu_usuario" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://tiktok.com/@tu_usuario" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://wa.me/573000000000" target="_blank" class="wa-icon"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        <p style="font-size: 0.75rem; color: #6b7280;">Atención personalizada y ventas directas vía WhatsApp.</p>
+      </div>
+    </div>
+
+    <div class="sub-footer">
+      <p>© 2026 Pinzón Inc. Todos los derechos reservados.</p>
+      <div class="sub-footer-links">
+        <a href="#">Términos de Venta</a>
+        <a href="#">Términos de Uso</a>
+        <a href="#">Política de Privacidad</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT DE FILTRADO Y NAVEGACIÓN AUTOMÁTICA -->
+  <script>
+    // Función para filtrar productos por clase o etiqueta
+    function applyFilter(category, clickedBtn) {
+      const cards = document.querySelectorAll('.product-card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      // Actualizar botón activo
+      if (clickedBtn) {
+        buttons.forEach(btn => btn.classList.remove('active'));
+        clickedBtn.classList.add('active');
+      } else {
+        buttons.forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${category}'`)) {
+            btn.classList.add('active');
+          }
+        });
+      }
+
+      // Mostrar u ocultar prendas segun filtro
+      cards.forEach(card => {
+        const itemCategories = card.getAttribute('data-category').split(' ');
+        if (category === 'todos' || itemCategories.includes(category)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Al cargar la pagina, leer la categoria indicada en la URL
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryFromUrl = urlParams.get('categoria') || 'todos';
+      applyFilter(categoryFromUrl, null);
+    });
+
+    // Buscador Desplegable
+    const searchBtn = document.getElementById('searchBtn');
+    const searchInput = document.getElementById('searchInput');
+
+    searchBtn.addEventListener('click', () => {
+      searchInput.classList.toggle('active');
+      if (searchInput.classList.contains('active')) {
+        searchInput.focus();
+      }
+    });
+
+    // Carrito Lateral (Slide-Over)
+    const cartBtn = document.getElementById('cartBtn');
+    const closeCart = document.getElementById('closeCart');
+    const cartModal = document.getElementById('cartModal');
+    const cartBackdrop = document.getElementById('cartBackdrop');
+
+    cartBtn.addEventListener('click', () => cartModal.classList.add('open'));
+    closeCart.addEventListener('click', () => cartModal.classList.remove('open'));
+    cartBackdrop.addEventListener('click', () => cartModal.classList.remove('open'));
+  </script>
+</body>
+</html>
