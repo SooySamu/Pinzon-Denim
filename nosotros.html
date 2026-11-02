@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,26 +10,26 @@
   <!-- FontAwesome Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
   <!-- 1. ENCABEZADO MINIMALISTA -->
   <header>
     <div class="header-container">
-      
+
       <!-- LOGO -->
       <a href="index.html" class="logo-brand">
-        <svg width="32" height="32" viewBox="0 0 100 100" fill="currentColor">
-          <path d="M50 10 L65 35 L80 35 L68 50 L75 80 L50 62 L25 80 L32 50 L20 35 L35 35 Z"/>
-        </svg>
-        <span>PINZÓN</span>
-      </a>
+  <img src="Logo.png" alt="Pinzón Logo" style="height: 32px; width: auto;">
+  <span>PINZÓN</span>
+</a>
 
       <!-- NAVEGACIÓN -->
       <nav class="main-nav">
         <a href="index.html">Inicio</a>
-        
- <div class="nav-item-dropdown">
-          <a href="catalogo.html?categoria=todos" style="font-weight: 700;">Catálogo <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
+
+        <div class="nav-item-dropdown">
+          <a href="catalogo.html?categoria=todos" style="font-weight: 700;">Catálogo <i class="fa-solid fa-chevron-down"
+              style="font-size: 10px;"></i></a>
           <div class="dropdown-menu">
             <div>
               <h4>Público</h4>
@@ -76,11 +77,8 @@
 
   <!-- 2. BANNER DE CABECERA NOSOTROS -->
   <section class="hero-section" style="height: 50vh;">
-    <img 
-      src="https://images.unsplash.com/photo-1582552938357-32b906df40cb?q=80&w=1600&auto=format&fit=crop" 
-      alt="Taller Pinzón" 
-      class="hero-bg-img"
-    >
+    <img src="https://images.unsplash.com/photo-1582552938357-32b906df40cb?q=80&w=1600&auto=format&fit=crop"
+      alt="Taller Pinzón" class="hero-bg-img">
     <div class="hero-content">
       <p class="hero-tag">Nuestra Historia & Propósito</p>
       <h1 class="hero-title" style="font-size: 3rem;">DISEÑO DE AUTOR & CONFECCIÓN ÉTICA</h1>
@@ -89,25 +87,35 @@
 
   <!-- 3. CONTENIDO EDITORIAL DE MARCA -->
   <section class="categories-section" style="max-width: 860px; padding: 4rem 1.5rem; line-height: 1.8;">
-    <h2 class="categories-title" style="margin-bottom: 1.5rem; border-bottom: 2px solid #000; padding-bottom: 0.5rem; display: inline-block;">El Taller de Bosa</h2>
-    
+    <h2 class="categories-title"
+      style="margin-bottom: 1.5rem; border-bottom: 2px solid #000; padding-bottom: 0.5rem; display: inline-block;">El
+      Taller de Bosa</h2>
+
     <p style="margin-bottom: 1.5rem; color: #374151; font-size: 1.1rem;">
-      En <strong>Pinzón</strong>, el denim trasciende la categoría de prenda básica para convertirse en un lienzo de expresión urbana y arquitectura textil[cite: 10]. Desde nuestro taller y showroom en Bosa, diseñamos piezas con identidad propia, cortes holgados y acabados de autor concebidos bajo el concepto de lujo accesible[cite: 8, 10].
+      En <strong>Pinzón</strong>, el denim trasciende la categoría de prenda básica para convertirse en un lienzo de
+      expresión urbana y arquitectura textil[cite: 10]. Desde nuestro taller y showroom en Bosa, diseñamos piezas con
+      identidad propia, cortes holgados y acabados de autor concebidos bajo el concepto de lujo accesible[cite: 8, 10].
     </p>
 
-    <h3 class="font-serif-custom" style="font-size: 1.75rem; font-weight: 700; margin: 2.5rem 0 1rem 0;">Impacto Social y Producción Responsable</h3>
-    
+    <h3 class="font-serif-custom" style="font-size: 1.75rem; font-weight: 700; margin: 2.5rem 0 1rem 0;">Impacto Social
+      y Producción Responsable</h3>
+
     <p style="margin-bottom: 1.5rem; color: #374151; font-size: 1.1rem;">
-      Nuestro modelo productivo situa la dignidad humana en el centro de la marca, empleando de manera prioritaria a personas cabeza de familia[cite: 10]. Fusionamos la durabilidad técnica del jean con estabilidad laboral e inclusión económica para las familias confeccionistas de nuestro taller[cite: 8, 10].
+      Nuestro modelo productivo situa la dignidad humana en el centro de la marca, empleando de manera prioritaria a
+      personas cabeza de familia[cite: 10]. Fusionamos la durabilidad técnica del jean con estabilidad laboral e
+      inclusión económica para las familias confeccionistas de nuestro taller[cite: 8, 10].
     </p>
 
-    <div style="background-color: #f9fafb; border-left: 4px solid #000; padding: 1.5rem; margin-top: 2.5rem; border-radius: 4px;">
+    <div
+      style="background-color: #f9fafb; border-left: 4px solid #000; padding: 1.5rem; margin-top: 2.5rem; border-radius: 4px;">
       <p class="font-serif-custom" style="font-style: italic; font-size: 1.25rem; color: #111;">
-        "Transformamos la confección local en una propuesta de consumo directo deseable, donde cada prenda lleva el equilibrio entre técnica, historia humana y diseño diferenciado."[cite: 8, 10]
+        "Transformamos la confección local en una propuesta de consumo directo deseable, donde cada prenda lleva el
+        equilibrio entre técnica, historia humana y diseño diferenciado."[cite: 8, 10]
       </p>
     </div>
   </section>
 
+  <!-- 4. CARRITO LATERAL (SLIDE-OVER) -->
   <!-- 4. CARRITO LATERAL (SLIDE-OVER) -->
   <div id="cartModal" class="cart-modal">
     <div id="cartBackdrop" class="cart-backdrop"></div>
@@ -117,25 +125,18 @@
           <h3 class="font-serif-custom" style="font-size: 1.25rem; font-weight: 700;">Tu Carrito</h3>
           <button id="closeCart" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div style="padding: 1rem 0;">
-          <div style="display: flex; gap: 1rem; align-items: center;">
-            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=150" style="width: 64px; height: 64px; object-fit: cover; border-radius: 4px;">
-            <div>
-              <h4 style="font-weight: 700; font-size: 0.875rem;">Jean Holgado de Autor</h4>
-              <p style="font-size: 0.75rem; color: #6b7280;">Talla M</p>
-              <span style="font-size: 0.875rem; font-weight: 600;">$180.000 COP</span>
-            </div>
-          </div>
-        </div>
+        <!-- Contenedor dinámico -->
+        <div id="cartItemsList" style="padding: 1rem 0; overflow-y: auto; max-height: 60vh;"></div>
       </div>
       <div style="border-top: 1px solid #e5e7eb; padding-top: 1rem;">
         <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 1rem;">
           <span>Total:</span>
-          <span>$180.000 COP</span>
+          <span id="cartTotalDisplay">$0 COP</span>
         </div>
-        <a href="https://wa.me/573000000000?text=Hola%20Pinzón,%20quisiera%20finalizar%20mi%20compra" target="_blank" class="btn-whatsapp">
-          <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
-        </a>
+        <!-- Botón enviar pedido -->
+        <button onclick="sendOrderToWhatsApp()" class="btn-whatsapp" style="width: 100%; border: none; cursor: pointer;">
+          <i class="fa-brands fa-whatsapp"></i> Hacer Pedido
+        </button>
       </div>
     </div>
   </div>
@@ -196,16 +197,100 @@
 
   <!-- SCRIPT INTERACTIVO -->
   <script>
+    let cart = JSON.parse(localStorage.getItem('pinzonCart')) || [];
+    const phoneNumber = '573002149202';
+
+    function saveCart() {
+      localStorage.setItem('pinzonCart', JSON.stringify(cart));
+    }
+
+    function formatPrice(number) {
+      return '$' + number.toLocaleString('es-CO') + ' COP';
+    }
+
+    function changeQuantity(index, delta) {
+      cart[index].quantity += delta;
+      if (cart[index].quantity <= 0) cart.splice(index, 1);
+      saveCart();
+      updateCartUI();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      saveCart();
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const cartList = document.getElementById('cartItemsList');
+      const totalDisplay = document.getElementById('cartTotalDisplay');
+      const cartCountIcons = document.querySelectorAll('.cart-count');
+
+      cartList.innerHTML = '';
+      let total = 0;
+      let totalItems = 0;
+
+      if (cart.length === 0) {
+        cartList.innerHTML = '<p style="text-align: center; color: #6b7280; margin-top: 2rem;">Tu carrito está vacío.</p>';
+      } else {
+        cart.forEach((item, index) => {
+          total += item.price * item.quantity;
+          totalItems += item.quantity;
+
+          cartList.innerHTML += `
+          <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid #f3f4f6; padding-bottom: 1rem;">
+            <img src="${item.imgUrl}" style="width: 64px; height: 64px; object-fit: cover; border-radius: 4px;">
+            <div style="flex: 1;">
+              <h4 style="font-weight: 700; font-size: 0.875rem;">${item.title}</h4>
+              <span style="font-size: 0.875rem; font-weight: 600;">${formatPrice(item.price)}</span>
+              
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                <button onclick="changeQuantity(${index}, -1)" style="border: 1px solid #e5e7eb; background: #fff; width: 24px; height: 24px; border-radius: 50%; cursor: pointer;">-</button>
+                <span style="font-size: 0.875rem; font-weight: 500; width: 16px; text-align: center;">${item.quantity}</span>
+                <button onclick="changeQuantity(${index}, 1)" style="border: 1px solid #e5e7eb; background: #fff; width: 24px; height: 24px; border-radius: 50%; cursor: pointer;">+</button>
+                <button onclick="removeFromCart(${index})" style="margin-left: auto; color: #ef4444; border: none; background: none; font-size: 0.75rem; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        `;
+        });
+      }
+      totalDisplay.innerText = formatPrice(total);
+      cartCountIcons.forEach(icon => {
+        icon.innerText = totalItems;
+        icon.style.display = totalItems > 0 ? 'flex' : 'none';
+      });
+    }
+
+    function sendOrderToWhatsApp() {
+      if (cart.length === 0) return alert("Agrega productos al carrito primero.");
+      let orderText = "Hola *Pinzón*, me gustaría realizar el siguiente pedido:\n\n";
+      let total = 0;
+      cart.forEach(item => {
+        let subtotal = item.price * item.quantity;
+        total += subtotal;
+        orderText += `- ${item.quantity}x ${item.title} (${formatPrice(subtotal)})\n`;
+      });
+      orderText += `\n*TOTAL: ${formatPrice(total)}*\n\nQuedo atento(a) para el pago y envío.`;
+      window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(orderText)}`, '_blank');
+    }
+
+    // Buscador Redireccional: En Inicio y Nosotros, buscar redirige al catálogo
     const searchBtn = document.getElementById('searchBtn');
     const searchInput = document.getElementById('searchInput');
 
     searchBtn.addEventListener('click', () => {
       searchInput.classList.toggle('active');
-      if (searchInput.classList.contains('active')) {
-        searchInput.focus();
+      if (searchInput.classList.contains('active')) searchInput.focus();
+    });
+
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        window.location.href = `catalogo.html?categoria=todos&search=${e.target.value}`;
       }
     });
 
+    // Panel Lateral del Carrito
     const cartBtn = document.getElementById('cartBtn');
     const closeCart = document.getElementById('closeCart');
     const cartModal = document.getElementById('cartModal');
@@ -214,6 +299,9 @@
     cartBtn.addEventListener('click', () => cartModal.classList.add('open'));
     closeCart.addEventListener('click', () => cartModal.classList.remove('open'));
     cartBackdrop.addEventListener('click', () => cartModal.classList.remove('open'));
+
+    window.addEventListener('DOMContentLoaded', updateCartUI);
   </script>
 </body>
+
 </html>
