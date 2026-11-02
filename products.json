@@ -1,0 +1,48 @@
+[
+  {
+    "id": "p01",
+    "titulo": "Jean Holgado Intervenido",
+    "etiqueta": "Jeans • Autor / Mujer",
+    "precio": 180000,
+    "categorias": ["jeans", "mujer", "new"],
+    "descripcion": "Jean holgado intervenido de silueta amplia. Diseñado bajo el concepto de lujo accesible, ideal para un look urbano y sofisticado.",
+    "tallas": ["6", "8", "10", "12"],
+    "colores": [
+      {
+        "nombre": "Azul Índigo",
+        "hex": "#1b2a4a",
+        "imagenes": [
+          "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=600",
+          "https://images.unsplash.com/photo-1582552938357-32b906df40cb?q=80&w=600"
+        ]
+      },
+      {
+        "nombre": "Negro",
+        "hex": "#111111",
+        "imagenes": [
+          "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600",
+          "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=600"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "p02",
+    "titulo": "Falda Denim de Autor",
+    "etiqueta": "Faldas • Mujer",
+    "precio": 140000,
+    "categorias": ["faldas", "mujer"],
+    "descripcion": "Falda denim con lavados artesanales y herrajes premium. Confeccionada por talento local garantizando durabilidad y diseño exclusivo.",
+    "tallas": ["S", "M", "L"],
+    "colores": [
+      {
+        "nombre": "Celeste",
+        "hex": "#7ba4c7",
+        "imagenes": [
+          "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=600",
+          "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=600"
+        ]
+      }
+    ]
+  }
+]

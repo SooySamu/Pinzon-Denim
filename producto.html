@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Producto | Pinzón Denim</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ESTILOS ESPECÍFICOS CON REDONDEO SUAVE Y TRANSICIONES SOFISTICADAS */
+        .detalle-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3.5rem;
+            max-width: 1280px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* GALERÍA DE FOTOS */
+        .galeria-lado {
+            flex: 1.2;
+            min-width: 320px;
+            display: flex;
+            gap: 1.25rem;
+        }
+
+        .miniaturas {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .miniatura-img {
+            width: 76px;
+            height: 98px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.7;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .miniatura-img:hover,
+        .miniatura-img.activa {
+            opacity: 1;
+            border-color: #111111;
+            transform: translateY(-2px);
+        }
+
+        .img-principal-box {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background-color: #f8f9fa;
+        }
+
+        .img-principal {
+            width: 100%;
+            height: 100%;
+            max-height: 720px;
+            object-fit: cover;
+            border-radius: 16px;
+            transition: opacity 0.35s ease, transform 0.4s ease;
+        }
+
+        /* FLECHAS FLOTANTES TRANSPARENTES CON INTERACCIÓN SOFISTICADA */
+        .flecha-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            /* 50% de transparencia */
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+        }
+
+        .flecha-nav:hover {
+            background: rgba(0, 0, 0, 0.85);
+            /* Mayor opacidad al pasar el mouse */
+            transform: translateY(-50%) scale(1.12);
+            /* Elevación y aumento suave */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .flecha-nav:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .flecha-prev {
+            left: 1rem;
+        }
+
+        .flecha-next {
+            right: 1rem;
+        }
+
+        /* LADO INFORMACIÓN */
+        .info-lado {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .producto-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .producto-precio {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 1.25rem;
+        }
+
+        /* DESCRIPCIÓN IMPLÍCITA BAJO EL TEXTO */
+        .producto-descripcion {
+            font-size: 0.925rem;
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 1.75rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        /* SELECCIÓN COLORES Y TALLAS CON SUAVE REDONDEO */
+        .seccion-opcion {
+            margin-bottom: 1.5rem;
+        }
+
+        .opcion-label {
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: #111;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .color-swatch {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .color-swatch.activo {
+            border-color: #111;
+            box-shadow: 0 0 0 2px #fff inset;
+        }
+
+        .btn-talla {
+            border: 1px solid #e5e7eb;
+            background: #f9fafb;
+            color: #111;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            /* Redondeo suave */
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-talla:hover {
+            border-color: #111;
+            background: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-talla.activa {
+            background: #111;
+            color: #fff;
+            border-color: #111;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tallas-grid {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        /* ACCIONES DE COMPRA (CONTADOR + BOTÓN AÑADIR) */
+        .acciones-compra {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contador-box {
+            display: flex;
+            align-items: center;
+            background: #f3f4f6;
+            border-radius: 9999px;
+            padding: 0.35rem 0.75rem;
+            gap: 0.75rem;
+        }
+
+        .btn-cant {
+            border: none;
+            background: transparent;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .btn-cant:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-add-cart {
+            flex: 1;
+            background: #111;
+            color: #fff;
+            border: none;
+            padding: 1rem 1.75rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-add-cart:hover {
+            background: #252525;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ACORDEÓN DESPLEGABLE DE ENVÍOS */
+        .acordeon-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .acordeon-btn {
+            width: 100%;
+            text-align: left;
+            background: #fff;
+            border: none;
+            padding: 1.1rem 1.25rem;
+            font-weight: 700;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #111;
+        }
+
+        .acordeon-contenido {
+            padding: 0 1.25rem 1.25rem 1.25rem;
+            display: none;
+            color: #4b5563;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ENCABEZADO MODULAR -->
+    <div id="header-root"></div>
+
+    <!-- VISTA PRINCIPAL DEL PRODUCTO -->
+    <section class="detalle-container" id="vistaProducto">
+        <p style="text-align: center; width: 100%;">Cargando diseño de autor...</p>
+    </section>
+
+    <!-- CARRUSEL DE PRODUCTOS RELACIONADOS -->
+    <section style="max-width: 1280px; margin: 4rem auto; padding: 0 1.5rem;">
+        <h3 class="font-serif-custom" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem;">PRODUCTOS
+            RELACIONADOS</h3>
+        <div class="product-grid" id="relacionadosGrid"
+            style="display: flex; gap: 1.5rem; overflow-x: auto; padding-bottom: 1rem;">
+            <!-- Se llena por JavaScript -->
+        </div>
+    </section>
+
+    <!-- COMPONENTES MODULARES -->
+    <div id="footer-root"></div>
+    <div id="cart-root"></div>
+
+    <!-- SCRIPT CENTRALIZADO Y LÓGICA DE DETALLE -->
+    <script src="script.js"></script>
+    <script>
+        let prendaActual = null;
+        let colorSeleccionado = null;
+        let tallaSeleccionada = null;
+        let fotoIndexActual = 0;
+        let cantidadSeleccionada = 1;
+
+        async function cargarVistaProducto() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const idParam = urlParams.get('id');
+
+            try {
+                const respuesta = await fetch("products.json");
+                const productos = await respuesta.json();
+
+                prendaActual = productos.find(p => p.id === idParam) || productos[0]; // Carga la primera prenda por defecto si no hay ID
+                colorSeleccionado = prendaActual.colores[0];
+
+                renderizarDetalle();
+                cargarRelacionados(productos);
+            } catch (e) {
+                console.error("Error al cargar detalle del producto:", e);
+            }
+        }
+
+        function renderizarDetalle() {
+            const vista = document.getElementById("vistaProducto");
+            const fotosHTML = colorSeleccionado.imagenes.map((img, i) =>
+                `<img src="${img}" class="miniatura-img ${i === fotoIndexActual ? 'activa' : ''}" onclick="seleccionarFoto(${i})">`
+            ).join("");
+
+            const coloresHTML = prendaActual.colores.map((col, i) =>
+                `<div class="color-swatch ${col.nombre === colorSeleccionado.nombre ? 'activo' : ''}" style="background-color: ${col.hex};" onclick="cambiarColor(${i})" title="${col.nombre}"></div>`
+            ).join("");
+
+            const tallasHTML = prendaActual.tallas.map(talla =>
+                `<button class="btn-talla ${talla === tallaSeleccionada ? 'activa' : ''}" onclick="seleccionarTalla('${talla}', this)">${talla}</button>`
+            ).join("");
+
+            vista.innerHTML = `
+        <!-- GALERÍA LADO IZQUIERDO -->
+        <div class="galeria-lado">
+          <div class="miniaturas">${fotosHTML}</div>
+          
+          <div class="img-principal-box">
+            <!-- FLECHAS NAVEGADORAS FLOTANTES -->
+            <button class="flecha-nav flecha-prev" onclick="cambiarFotoFlecha(-1)">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            
+            <img src="${colorSeleccionado.imagenes[fotoIndexActual]}" id="fotoPrincipal" class="img-principal" alt="${prendaActual.titulo}">
+            
+            <button class="flecha-nav flecha-next" onclick="cambiarFotoFlecha(1)">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+        
+        <!-- INFORMACIÓN LADO DERECHO -->
+        <div class="info-lado">
+          <h1 class="producto-titulo">${prendaActual.titulo}</h1>
+          <p class="producto-precio">${formatPrice(prendaActual.precio)}</p>
+          
+          <!-- DESCRIPCIÓN EN TEXTO CORRIDO -->
+          <p class="producto-descripcion">${prendaActual.descripcion}</p>
+          
+          <!-- VARIANTES DE COLOR -->
+          <div class="seccion-opcion">
+            <span class="opcion-label">Color: <span style="font-weight: 400; color: #6b7280;">${colorSeleccionado.nombre}</span></span>
+            <div style="display: flex; gap: 0.75rem;">${coloresHTML}</div>
+          </div>
+          
+          <!-- VARIANTES DE TALLA -->
+          <div class="seccion-opcion">
+            <span class="opcion-label">Talla</span>
+            <div class="tallas-grid">${tallasHTML}</div>
+          </div>
+          
+          <!-- CONTADOR Y BOTÓN AÑADIR AL CARRITO -->
+          <div class="acciones-compra">
+            <div class="contador-box">
+              <button class="btn-cant" onclick="modificarCantidad(-1)">-</button>
+              <span class="cant-numero" id="cantDisplay">${cantidadSeleccionada}</span>
+              <button class="btn-cant" onclick="modificarCantidad(1)">+</button>
+            </div>
+            
+            <button class="btn-add-cart" onclick="prepararParaCarrito()">
+              <span>AÑADIR AL CARRITO</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <!-- DESPLEGABLE EXCLUSIVO DE ENVÍOS Y DEVOLUCIONES -->
+          <div class="acordeon-item">
+            <button class="acordeon-btn" onclick="toggleAcordeon('envioContent', this)">
+              <span>ENVÍOS Y DEVOLUCIONES</span>
+              <i class="fa-solid fa-chevron-down" style="transition: transform 0.3s ease;"></i>
+            </button>
+            <div id="envioContent" class="acordeon-contenido">
+              <p style="margin-bottom: 0.5rem;"><strong>Envíos a Bogotá:</strong> 2 a 4 días laborables.</p>
+              <p style="margin-bottom: 0.5rem;"><strong>Envíos a otras ciudades de Colombia:</strong> 6 a 8 días laborables.</p>
+              <p><strong>Devoluciones:</strong> Dispones de 30 días a partir de la fecha de envío de tu pedido para realizar devoluciones o cambios de talla.</p>
+            </div>
+          </div>
+        </div>
+      `;
+        }
+
+        /* CAMBIO DE FOTOS Y ANIMACIÓN FADE SUAVE */
+        function seleccionarFoto(index) {
+            fotoIndexActual = index;
+            actualizarFotoPrincipal();
+        }
+
+        function cambiarFotoFlecha(direccion) {
+            const totalFotos = colorSeleccionado.imagenes.length;
+            fotoIndexActual = (fotoIndexActual + direccion + totalFotos) % totalFotos;
+            actualizarFotoPrincipal();
+        }
+
+        function actualizarFotoPrincipal() {
+            const imgPrincipal = document.getElementById("fotoPrincipal");
+            if (!imgPrincipal) return;
+
+            imgPrincipal.style.opacity = 0;
+            setTimeout(() => {
+                imgPrincipal.src = colorSeleccionado.imagenes[fotoIndexActual];
+                imgPrincipal.style.opacity = 1;
+            }, 200);
+
+            document.querySelectorAll('.miniatura-img').forEach((el, i) => {
+                el.classList.toggle('activa', i === fotoIndexActual);
+            });
+        }
+
+        function cambiarColor(indiceColor) {
+            colorSeleccionado = prendaActual.colores[indiceColor];
+            fotoIndexActual = 0;
+            renderizarDetalle();
+        }
+
+        function seleccionarTalla(talla, btn) {
+            tallaSeleccionada = talla;
+            document.querySelectorAll('.btn-talla').forEach(el => el.classList.remove('activa'));
+            btn.classList.add('activa');
+        }
+
+        function modificarCantidad(delta) {
+            cantidadSeleccionada = Math.max(1, cantidadSeleccionada + delta);
+            const display = document.getElementById("cantDisplay");
+            if (display) display.innerText = cantidadSeleccionada;
+        }
+
+        function toggleAcordeon(id, btn) {
+            const content = document.getElementById(id);
+            const icono = btn.querySelector('.fa-chevron-down');
+            const estaAbierto = content.style.display === "block";
+
+            content.style.display = estaAbierto ? "none" : "block";
+            if (icono) icono.style.transform = estaAbierto ? "rotate(0deg)" : "rotate(180deg)";
+        }
+
+        function prepararParaCarrito() {
+            if (!tallaSeleccionada) {
+                alert("Por favor selecciona una talla antes de añadir al carrito.");
+                return;
+            }
+
+            // Agrega según la cantidad elegida
+            for (let i = 0; i < cantidadSeleccionada; i++) {
+                addToCart(prendaActual.titulo, prendaActual.precio, colorSeleccionado.imagenes[fotoIndexActual], tallaSeleccionada, colorSeleccionado.nombre);
+            }
+        }
+
+        function cargarRelacionados(productos) {
+            const grid = document.getElementById("relacionadosGrid");
+            if (!grid) return;
+
+            const catPrincipal = prendaActual.categorias[0];
+            const filtrados = productos.filter(p => p.categorias.includes(catPrincipal) && p.id !== prendaActual.id);
+
+            filtrados.forEach(p => {
+                grid.innerHTML += `
+          <div style="min-width: 240px; flex: 0 0 auto;">
+            <a href="producto.html?id=${p.id}" style="text-decoration:none; color:inherit;">
+              <img src="${p.colores[0].imagenes[0]}" style="width: 100%; height: 320px; object-fit: cover; border-radius: 12px; transition: transform 0.3s ease;">
+              <h4 style="font-weight: 700; margin-top: 0.75rem; font-size: 0.875rem; margin-bottom: 0.25rem;">${p.titulo}</h4>
+              <span style="font-size: 0.875rem; color: #4b5563;">${formatPrice(p.precio)}</span>
+            </a>
+          </div>
+        `;
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", cargarVistaProducto);
+    </script>
+</body>
+
+</html>
