@@ -22,20 +22,25 @@ function inyectarHeader() {
   if (!headerRoot) return;
 
   headerRoot.innerHTML = `
-    <header style="position: sticky; top: 0; z-index: 40; background-color: #ffffff; border-bottom: 1px solid #f3f4f6;">
-      <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; height: 64px; display: flex; align-items: center; justify-content: space-between;">
+    <header class="main-header">
+      <div class="header-container">
         
-        <!-- LOGO -->
-        <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: #0f172a;">
+        <!-- 1. IZQUIERDA (CELULAR): BOTÓN HAMBURGUESA -->
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Abrir menú">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- 2. CENTRO (CELULAR) / IZQUIERDA (PC): LOGO PINZÓN -->
+        <a href="index.html" class="logo-link">
           <img src="Images/Logo.png" alt="Pinzón Logo" style="height: 32px; width: auto;">
           <span style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">PINZÓN</span>
         </a>
 
-        <!-- NAVEGACIÓN PRINCIPAL -->
-        <nav style="display: flex; align-items: center; gap: 2rem; font-size: 0.875rem; font-weight: 500;">
+        <!-- 3. MENÚ DE NAVEGACIÓN (SE CONVIERTE EN DRAWER EN MÓVIL) -->
+        <nav id="mobileNav" class="nav-menu">
           <a href="index.html" style="text-decoration: none; color: #111;">Inicio</a>
           
-          <div style="position: relative; padding: 1.25rem 0;" class="nav-item-dropdown">
+          <div style="position: relative; padding: 0.25rem 0;" class="nav-item-dropdown">
             <a href="catalogo.html?categoria=todos" style="text-decoration: none; color: #111;">Catálogo <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
             <div class="dropdown-menu">
               <div>
@@ -63,17 +68,18 @@ function inyectarHeader() {
           <a href="#contacto" style="text-decoration: none; color: #111;">Contacto</a>
         </nav>
 
-        <!-- ACCIONES -->
-        <div style="display: flex; align-items: center; gap: 1.25rem;">
+        <!-- 4. DERECHA (CELULAR Y PC): LUPA Y CARRITO -->
+        <div class="header-actions">
           <div style="position: relative; display: flex; align-items: center;">
             <button id="searchBtnGlobal" style="background: none; border: none; cursor: pointer; padding: 0.5rem; font-size: 1rem;"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <input type="text" id="searchInputGlobal" style="position: absolute; right: 0; width: 240px; background-color: #f3f4f6; font-size: 0.875rem; padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid #d1d5db; display: none;" placeholder="Buscar prendas...">
+            <input type="text" id="searchInputGlobal" style="position: absolute; right: 0; width: 240px; background-color: #f3f4f6; font-size: 0.875rem; padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid #d1d5db; display: none; z-index: 20;" placeholder="Buscar prendas...">
           </div>
           <button id="cartBtnGlobal" style="background: none; border: none; cursor: pointer; padding: 0.5rem; font-size: 1rem; position: relative;">
             <i class="fa-solid fa-bag-shopping"></i>
             <span class="cart-count" style="position: absolute; top: 0; right: 0; background: #000; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: none; align-items: center; justify-content: center;">0</span>
           </button>
         </div>
+
       </div>
     </header>
   `;
@@ -174,7 +180,24 @@ function inicializarEventosGlobales() {
   const closeCartBtn = document.getElementById("closeCart");
   const cartBackdrop = document.getElementById("cartBackdrop");
   const cartModal = document.getElementById("cartModal");
+  
+  // NUEVO: Variables para menú hamburguesa móvil
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileNav = document.getElementById("mobileNav");
 
+  // Evento Menú Hamburguesa Móvil
+  if (mobileMenuBtn && mobileNav) {
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileNav.classList.toggle("active");
+      const icon = mobileMenuBtn.querySelector("i");
+      if (icon) {
+        icon.classList.toggle("fa-bars");
+        icon.classList.toggle("fa-xmark");
+      }
+    });
+  }
+
+  // Evento Buscador
   if (searchBtn && searchInput) {
     searchBtn.addEventListener("click", () => {
       searchInput.style.display = searchInput.style.display === "block" ? "none" : "block";
@@ -188,6 +211,7 @@ function inicializarEventosGlobales() {
     });
   }
 
+  // Evento Abrir Carrito
   if (cartBtn && cartModal) {
     cartBtn.addEventListener("click", () => cartModal.classList.add("open"));
   }
@@ -307,29 +331,75 @@ function cambiarColorTarjeta(event, productoId, nuevaImg, elementoDot) {
   container.querySelectorAll('.card-color-dot').forEach(dot => dot.classList.remove('activo'));
   elementoDot.classList.add('activo');
 }
+let filtrosActivos = [];
 
 function applyFilter(category, clickedBtn) {
   const cards = document.querySelectorAll('.product-card');
   const buttons = document.querySelectorAll('.filter-btn');
 
-  if (clickedBtn) {
+  // 1. Si se selecciona "todos" o "Ver Todo", reiniciamos los filtros activos
+  if (category === 'todos') {
+    filtrosActivos = [];
     buttons.forEach(btn => btn.classList.remove('active'));
-    clickedBtn.classList.add('active');
-  } else {
+    
+    // Marcar activo solo el botón "Ver Todo"
     buttons.forEach(btn => {
-      btn.classList.remove('active');
-      if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${category}'`)) {
+      if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'todos'")) {
         btn.classList.add('active');
       }
     });
+  } else {
+    // Desmarcar el botón "Ver Todo" si se selecciona una categoría específica
+    buttons.forEach(btn => {
+      if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'todos'")) {
+        btn.classList.remove('active');
+      }
+    });
+
+    // 2. Alternar (Toggle): si ya está en la lista se quita, si no se agrega
+    const index = filtrosActivos.indexOf(category);
+    if (index > -1) {
+      filtrosActivos.splice(index, 1);
+      if (clickedBtn) clickedBtn.classList.remove('active');
+    } else {
+      filtrosActivos.push(category);
+      if (clickedBtn) clickedBtn.classList.add('active');
+    }
+
+    // Si la llamada viene por URL (clickedBtn es null), iluminar los botones activos correspondientes
+    if (!clickedBtn) {
+      buttons.forEach(btn => {
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${category}'`)) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    // Si se desmarcaron todos los filtros, volver a activar "Ver Todo" por defecto
+    if (filtrosActivos.length === 0) {
+      buttons.forEach(btn => {
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'todos'")) {
+          btn.classList.add('active');
+        }
+      });
+    }
   }
 
+  // 3. Evaluar cada prenda: debe contener TODOS los filtros de la lista `filtrosActivos`
   cards.forEach(card => {
     const itemCategories = card.getAttribute('data-category').split(' ');
-    if (category === 'todos' || itemCategories.includes(category)) {
+
+    if (filtrosActivos.length === 0) {
       card.style.display = 'flex';
     } else {
-      card.style.display = 'none';
+      // Verificación acumulativa: ¿La prenda contiene cada uno de los filtros seleccionados?
+      const cumpleTodosLosFiltros = filtrosActivos.every(filtro => itemCategories.includes(filtro));
+      
+      if (cumpleTodosLosFiltros) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
     }
   });
 }

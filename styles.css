@@ -638,3 +638,135 @@ footer {
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.35);
 }
+
+/* --- ENCABEZADO FIJO GLOBAL (PC Y MÓVIL) --- */
+.main-header {
+  position: fixed !important; /* Fixed asegura que quede pegado arriba al hacer scroll */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f3f4f6;
+  width: 100%;
+}
+body {
+  padding-top: 64px;
+}
+
+.header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Botón Hamburguesa (Oculto por defecto en PC) */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #111;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+/* Navegación Desktop */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* --- ADAPTACIÓN EXCLUSIVA PARA CELULARES (<= 768px) --- */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0 1rem;
+  }
+
+  /* 1. IZQUIERDA: Menú hamburguesa visible */
+  .mobile-menu-btn {
+    display: block;
+    z-index: 10;
+  }
+
+  /* 2. CENTRO: Logo centrado al medio de la pantalla */
+  .logo-link {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: #0f172a;
+  }
+
+  .logo-link img {
+    height: 26px !important;
+  }
+
+  .logo-link span {
+    font-size: 1.15rem !important;
+  }
+
+  /* 3. DERECHA: Acciones (Lupa y Carrito visibles) */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    z-index: 10;
+  }
+
+  /* Desplegable de la barra de búsqueda en móvil */
+  #searchInputGlobal {
+    width: 190px !important;
+    right: 0 !important;
+    top: 45px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  /* 4. MENÚ DESPLEGABLE LATERAL (Deslizable desde la izquierda) */
+  .nav-menu {
+    position: fixed;
+    top: 64px;
+    left: -100%;
+    width: 270px;
+    height: calc(100vh - 64px);
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 45;
+  }
+
+  /* Estado cuando el usuario pulsa el botón hamburguesa */
+  .nav-menu.active {
+    left: 0;
+  }
+}
+.logo-link,
+.logo-link:visited,
+.logo-link:hover,
+.logo-link:active {
+  text-decoration: none !important;
+  color: #0f172a !important; /* Negro de marca */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-link span {
+  color: #0f172a !important;
+  text-decoration: none !important;
+}
